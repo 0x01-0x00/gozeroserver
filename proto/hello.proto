@@ -1,19 +1,34 @@
+// proto文件版本
 syntax = "proto3";
 
+// 指定Go语言的包名
 option go_package = "GoZeroSever/proto";
 
+// HelloRequest 定义Hello服务的请求消息格式
 message HelloRequest {
     // 类型 字段 = 标签号;
     string name = 1;
 }
 
+// HelloResponse 定义Hello服务的响应消息格式
 message HelloResponse {
     string message = 1;
 }
 
+// HelloService 提供Hello服务接口
 service HelloService {
+    // Hello 处理客户端的Hello请求
+    // 参数: HelloRequest - 包含用户名称的请求消息
+    // 返回值: HelloResponse - 包含问候消息的响应消息
     rpc Hello (HelloRequest) returns (HelloResponse) {}
 }
+
+//protoc: Protocol Buffer 编译器主命令
+//--go_out=.: 生成基础 Go 代码文件到当前目录
+//--go_opt=paths=source_relative: 设置 Go 代码生成路径选项，使生成文件相对于源文件路径
+//--go-grpc_out=.: 生成 gRPC Go 代码文件到当前目录
+//--go-grpc_opt=paths=source_relative: 设置 gRPC Go 代码生成路径选项
+//proto/hello.proto: 指定要编译的 .proto 文件路径
 
 //protoc --go_out=. --go_opt=paths=source_relative \
 //    --go-grpc_out=. --go-grpc_opt=paths=source_relative \
